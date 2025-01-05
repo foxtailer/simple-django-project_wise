@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/normolize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block content_style %}{% endblock %}
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/favicon/feather-16x16.png" %}">
+
+    <script>
+      var userId = "{{ user.id }}";
+    </script>
+
+    {% block token %}{% endblock  %}
+
+    <title>{{ page_title }}</title>
+</head>
+  <body>
+    {% include "include/exit.html" %}
+    
+    <div class="wrapper">
+      <header class="header">
+        <div class="container">
+          <ul class="top-menu">
+            {% block top-menu__items %}{% endblock %}
+          </ul>
+        </div>
+      </header>
+  
+      <main class="main">
+        <div class="container">
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+  
+      <footer class="footer">
+        <div class="container">
+          <ul class="bottom-menu">
+            {% block bottom-menu__items %}{% endblock %}
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    {% block load_jq %}{% endblock %}
+    {% block load_js %}{% endblock %}
+  </body>
+</html>

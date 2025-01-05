@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content_style %}
+<link rel="stylesheet" href="{% static 'css/my.css' %}">
+{% endblock %}
+
+{% block load_js %}<script src="{% static '/js/js-my.js' %}"></script>{% endblock %}
+
+{% block token %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock  %}
+
+
+{% block top-menu__items %}
+<li>
+    {% include "include/write.html" %}
+  </li>
+
+  <li>
+    {% include "include/explore.html" %}
+  </li>
+{% endblock %}
+
+
+{% block content %}
+<div class="wisdom_inner">
+  {% for post in posts %}
+    <p class="my_wisdom" id="{{ post.id }}">{{ post.text }}</p> 
+  {% endfor %}
+</div>
+
+{% include "main/include/change-post.html" %}
+{% endblock %}
+
+
+{% block bottom-menu__items %}
+<li class="bottom-menu__item">
+  <button class="control-element active" id="deleate" onclick="deletePost()">
+    <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <use href="{% static 'img/icon/icons.svg' %}#icon-garbage-cart"></use>
+      </svg>
+  </button>
+</li>
+
+<li class="bottom-menu__item">
+  <button class="control-element active" id="" onclick="openForm()">
+    <svg width="40px" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <use href="{% static 'img/icon/icons.svg' %}#icon-edit-pen"></use>
+      </svg>
+  </button>
+</li>
+{% endblock %}
+

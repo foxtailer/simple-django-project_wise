@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content_style %}
+    <link rel="stylesheet" href="{% static 'css/write.css' %}">
+{% endblock %}
+
+
+{% block top-menu__items %}
+    <li class="top-menu__item">
+        {% include "include/explore.html" with user=user %}
+    </li>
+
+    <li class="top-menu__item">
+        {% include "include/my.html" with user=user %}
+    </li>
+{% endblock  %}
+
+
+{% block content %}
+<form class="write-form" action="{% url "main:write" %}" method="post">
+    {% csrf_token %}
+    <textarea class="write-form__user-input" name="text" required></textarea>
+    <span class='write-form__settings'>
+        <input type="checkbox" id="allow-answer" name="answer" checked>
+        <label for="allow-answer">Allow answer</label>
+
+        <input type="checkbox" id="redy" name="status">
+        <label for="redy">Compleate</label>
+    </span>
+
+    <div class="add-btn__wrapper">
+        <button class="control-element active" type="submit">
+            <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+                <use href="{% static 'img/icon/icons.svg' %}#icon-plus"></use>
+            </svg>
+        </button>
+    </div>
+</form>
+{% endblock  %}
+

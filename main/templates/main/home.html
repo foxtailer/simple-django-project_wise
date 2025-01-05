@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% include "img/icon/icons.svg" %}
+
+{% block content_style %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-index__inner">
+  {% include "include/write.html" %}
+  
+  {% include "include/explore.html" %}
+
+  {% include "include/my.html" %}
+
+</div>
+{% include "main/include/log-reg.html" %}
+{% endblock %}
