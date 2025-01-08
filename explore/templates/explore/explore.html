@@ -12,11 +12,11 @@
 
 {% block top-menu__items %}
   <li>
-    {% include "include/write.html" %}
+    {% include "includes/write.html" %}
   </li>
 
   <li>
-    {% include "include/my.html" with user=user %}
+    {% include "includes/book.html" with user=user %}
   </li>
 
   <li>
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-{% include "main/include/log-reg.html" %}
+{% include "main/includes/log-reg.html" %}
 {% endblock %}
 
 

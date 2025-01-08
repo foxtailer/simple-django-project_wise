@@ -2,7 +2,7 @@
 
 <div id="popupForm" class="popup">
     <div class="popup-content">
-        <form class="write-form" action="{% url "main:my" %}" method="post">
+        <form class="write-form" action="{% url "book:book" %}" method="post">
             {% csrf_token %}
             <span class="close-button" onclick="closeForm()">&times;</span>
             <input type="text" id="post_id" name="post_id" style="display:none;">

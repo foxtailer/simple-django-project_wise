@@ -9,17 +9,17 @@
 
 {% block top-menu__items %}
     <li class="top-menu__item">
-        {% include "include/explore.html" with user=user %}
+        {% include "includes/explore.html" with user=user %}
     </li>
 
     <li class="top-menu__item">
-        {% include "include/my.html" with user=user %}
+        {% include "includes/book.html" with user=user %}
     </li>
 {% endblock  %}
 
 
 {% block content %}
-<form class="write-form" action="{% url "main:write" %}" method="post">
+<form class="write-form" action="{% url "write:write" %}" method="post">
     {% csrf_token %}
     <textarea class="write-form__user-input" name="text" required></textarea>
     <span class='write-form__settings'>

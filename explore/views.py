@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
+from django.views.decorators.http import require_POST
 
 from main.models import Post, WiseUser
 
@@ -68,3 +69,17 @@ def explore(request):
     }
 
     return render(request, 'explore/explore.html', context=context)
+
+
+@require_POST
+def report(request):
+    post_id = request.POST.get('post_id')
+    user = request.user
+    try:
+        wisdom = Post.published.get(id=post_id)
+        wisdom.report += 1
+        wisdom.reported_by.add(user)
+        wisdom.save()
+        return JsonResponse({'status': 'success', 'report': wisdom.report})
+    except Post.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Wisdom not found'}, status=404)

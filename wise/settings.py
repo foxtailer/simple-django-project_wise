@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'main',
     'explore',
+    'book',
+    'write',
 ]
 
 MIDDLEWARE = [
