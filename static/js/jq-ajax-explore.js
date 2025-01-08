@@ -1,6 +1,7 @@
 $(document).ready(function () {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
+
     $.ajaxSetup({
         headers: {
             'X-CSRFToken': csrfToken
@@ -32,7 +33,7 @@ $(document).ready(function () {
                     document.getElementById("mail_btn").setAttribute("class", "control-element " + "active ");
                 } else {
                     document.getElementById("mail_btn").setAttribute("class", "control-element " + "off");
-                    document.getElementById("mail_btn").setAttribute("href", "");
+                    document.getElementById("mail_btn").setAttribute("href", "#");
                 }
    
                 document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
@@ -46,6 +47,7 @@ $(document).ready(function () {
             },
 
             error: function (data) {
+                console.log(data);
                 console.log("Ошибка");
             },
         });
