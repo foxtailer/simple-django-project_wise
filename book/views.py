@@ -42,6 +42,4 @@ def book(request):
     
     context = {'posts': posts,}
 
-    return render(request,
-                  'book/book.html',
-                  context=context,)
+    return render(request, 'book/book.html', context=context,)

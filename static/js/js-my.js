@@ -1,7 +1,7 @@
 let selectedId = null;
 let previousElement = null;
 
-const wisdomElements = document.querySelectorAll('.my_wisdom');
+const wisdomElements = document.querySelectorAll('.my');
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 

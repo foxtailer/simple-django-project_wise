@@ -1,4 +1,4 @@
-# Simple Django Web Application
+# Simple Django Web Application(Wise)
 
 ## Overview
 

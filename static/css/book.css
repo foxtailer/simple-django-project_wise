@@ -1,15 +1,16 @@
-.my_wisdom {
+.wisdom {
     padding: 10px;
     border: 2px solid #000000;
     border-radius: 10px;
+    width: 100%;
 }
 
-.my_wisdom:hover {
+.my:hover {
     background-color: #323232;
     color: #eaeaea;
 }
 
-.my_wisdom + .my_wisdom {
+.wisdom + .wisdom {
     margin-top: 3px;
 }
 
@@ -21,4 +22,11 @@
 
 .write-form__settings {
     display: block;
+}
+
+.book-list_element {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-top: 5px;
 }
