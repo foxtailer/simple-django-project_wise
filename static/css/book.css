@@ -30,3 +30,12 @@
     gap: 5px;
     padding-top: 5px;
 }
+
+#unlike_btn {
+    margin-left: 5px;
+}
+
+#unlike_btn:hover {
+    border: 2px solid red;
+    border-radius: 5px;
+}

@@ -5,7 +5,12 @@
 <link rel="stylesheet" href="{% static 'css/book.css' %}">
 {% endblock %}
 
-{% block load_js %}<script src="{% static '/js/js-my.js' %}"></script>{% endblock %}
+{% block load_jq %}<script src="{% static 'js/jquery/jquery-3.7.0.min.js' %}"></script>{% endblock %}
+
+{% block load_js %}
+  <script src="{% static '/js/js-book.js' %}"></script>
+  <script src="{% static '/js/jq-ajax-book.js' %}"></script>
+{% endblock %}
 
 {% block token %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock  %}
 
@@ -25,12 +30,14 @@
 <div class="wisdom_inner">
   {% for post in posts %}
     <div class="book-list_element">
-      <p class="wisdom{% if user.id == post.author.id  %} my{% endif %}" id="{{ post.id }}">{{ post.text }}</p>
+      <p class="wisdom{% if user.id == post.author.id  %} my{% endif %}" id="{{ post.id }}" data-wisdom-id="{{ post.id }}">{{ post.text }}</p>
 
       {% if user.id != post.author.id  %}
-        <svg width="15px" height="15px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-          <use href="{% static 'img/icon/icons.svg' %}#icon-globe"></use>
-        </svg>
+        <button class="control-element  active" id="unlike_btn" data-like="{{ unlike }}">
+          <svg width="15px" height="15px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+            <use href="{% static 'img/icon/icons.svg' %}#icon-bookmark"></use>
+          </svg>
+        </button>
       {% endif %}
     </div>
   {% endfor %}

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.urls import reverse
 
-from main.models import Post
+from main.models import Post, WiseUser
 
 
 def book(request):
@@ -34,6 +34,17 @@ def book(request):
         post.save()
 
         return redirect(reverse('book:book'))
+    
+    if request.method == "PATCH":
+        data = json.loads(request.body)
+        post = Post.published.get(id=data.get('post_id'))
+        user = WiseUser.objects.get(id=data.get('user_id'))
+
+        post.accepted.remove(user)
+        post.save()
+
+        response_data = {'status': '200'}
+        return JsonResponse(response_data)
     
     user_id = request.user.id
     posts1 = Post.objects.filter(accepted__id=user_id)
