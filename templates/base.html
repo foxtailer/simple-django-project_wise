@@ -13,7 +13,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/favicon/feather-16x16.png" %}">
 
     <script>
-      var userId = "{{ user.id }}";
+      let userId = "{{ user.id }}";
+      userId = (userId === 'None') ? null : parseInt(userId);
     </script>
 
     {% block token %}{% endblock  %}

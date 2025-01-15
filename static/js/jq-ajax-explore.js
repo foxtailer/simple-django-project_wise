@@ -29,19 +29,11 @@ $(document).ready(function () {
                 $container.removeData("wisdom-id"); 
                 
                 const post = JSON.parse(data.post)
-
-                document.getElementById("mail_btn").setAttribute("href", "mailto:" + data.email);
-
-                if (data.reply) {
-                    document.getElementById("mail_btn").setAttribute("class", "control-element " + "active ");
-                } else {
-                    document.getElementById("mail_btn").setAttribute("class", "control-element " + "off");
-                    document.getElementById("mail_btn").setAttribute("href", "#");
-                }
-   
-                document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
-
+                
                 if (userId) {
+                    // Bookmark button
+                    document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
+
                     if (post[0].fields.author == userId) {
                         document.getElementById("like_btn").setAttribute("class", "control-element " + "off");
                     } else {
@@ -50,18 +42,31 @@ $(document).ready(function () {
                         } else {
                             document.getElementById("like_btn").setAttribute("class", "control-element " + "active");
                         }
-                    }
+                    };
+
+                    // Report button 
+                    if (post[0].fields.author != userId && !data.is_accepted) {
+                        document.getElementById("report_btn").setAttribute("class", "control-element " + "active " + "report");
+                    } else {
+                        document.getElementById("report_btn").setAttribute("class", "control-element " + "report " + "off");
+                    };
+
+                    // Mail button
+                    document.getElementById("mail_btn").setAttribute("href", "mailto:" + data.email);
+
+                    if (data.reply) {
+                        document.getElementById("mail_btn").setAttribute("class", "control-element " + "active ");
+                    } else {
+                        document.getElementById("mail_btn").setAttribute("class", "control-element " + "off");
+                        document.getElementById("mail_btn").setAttribute("href", "#");
+                    };
+
                 } else {
                     document.getElementById("like_btn").setAttribute("class", "control-element " + "off");
-                }
-
-                if (post[0].fields.author != userId) {
-                    console.log(post[0].fields.author)
-                    document.getElementById("report_btn").setAttribute("class", "control-element " + "active " + "report");
-                } else {
-                    console.log(post[0].fields.author)
                     document.getElementById("report_btn").setAttribute("class", "control-element " + "report " + "off");
-                }
+                    document.getElementById("mail_btn").setAttribute("class", "control-element " + "off");
+                    document.getElementById("mail_btn").setAttribute("href", "#");
+                };
             },
 
             error: function (data) {
@@ -96,7 +101,7 @@ $(document).ready(function () {
             }),
         
             success: function (data) {
-                console.log(data.is_accepted)
+                console.log(data)
                 button.removeData("like"); 
                 button.attr("data-like", data.is_accepted);
             },

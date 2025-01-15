@@ -14,16 +14,19 @@ def explore(request):
     # When klick next button
     if request.method == "POST":
         except_id = request.POST.get('wisdom_id')
-        user = WiseUser.objects.get(id=user_id)
-        post = Post.random_wisdome(except_id, user_id)
+        if user_id:
+            user = WiseUser.objects.get(id=user_id)
+            post = Post.random_wisdome(except_id, user_id)
+        else:
+            post = Post.random_wisdome(except_id)
         post_data = serialize('json', [post])
 
         response_data = {
             'wisdom': post.text,
             'wisdom_id': post.id,
-            'reply': post.reply if post.author != user else False,
+            'reply': False if not user_id else post.reply if post.author != user else False,
             'email': post.author.email,
-            'is_accepted': post.accepted.filter(id=user.id).exists(),
+            'is_accepted': int(post.accepted.filter(id=user.id).exists()),
             'post': post_data,
         }
 
@@ -31,11 +34,13 @@ def explore(request):
 
     # bookmark button
     elif request.method == "PATCH":
+        print(request.body.decode('utf-8'))
         data = json.loads(request.body)
+        print(data)
 
         post = Post.published.get(id=data.get('post_id'))
         user = WiseUser.objects.get(id=data.get('user_id'))
-        is_accepted = data.get('is_accepted') == 'True' or data.get('is_accepted')
+        is_accepted = True if int(data.get('is_accepted')) else False
 
         if is_accepted:
             post.accepted.remove(user)
@@ -45,7 +50,7 @@ def explore(request):
             post.save()
 
         response_data = {'status': '200',
-                         'is_accepted': not is_accepted}
+                         'is_accepted': not int(is_accepted)}
         return JsonResponse(response_data)
     
     # report
@@ -70,7 +75,7 @@ def explore(request):
     context = {
         'page_title': 'Explore',
         'post': post,
-        'is_accepted': post.accepted.filter(id=user_id).exists(),
+        'is_accepted': int(post.accepted.filter(id=user_id).exists()),
     }
 
     return render(request, 'explore/explore.html', context=context)
