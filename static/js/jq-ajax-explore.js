@@ -28,7 +28,10 @@ $(document).ready(function () {
                 $container.attr("data-wisdom-id", data.wisdom_id);
                 $container.removeData("wisdom-id"); 
                 
+                const post = JSON.parse(data.post)
+
                 document.getElementById("mail_btn").setAttribute("href", "mailto:" + data.email);
+
                 if (data.reply) {
                     document.getElementById("mail_btn").setAttribute("class", "control-element " + "active ");
                 } else {
@@ -37,13 +40,20 @@ $(document).ready(function () {
                 }
    
                 document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
+
                 if (data.is_accepted) {
                     document.getElementById("like_btn").setAttribute("class", "control-element " + "active " + "used");
                 } else {
                     document.getElementById("like_btn").setAttribute("class", "control-element " + "active ");
                 }
 
-                document.getElementById("report_btn").setAttribute("class", "control-element " + "active " + "report");
+                if (post[0].fields.author != userId) {
+                    console.log(post[0].fields.author)
+                    document.getElementById("report_btn").setAttribute("class", "control-element " + "active " + "report");
+                } else {
+                    console.log(post[0].fields.author)
+                    document.getElementById("report_btn").setAttribute("class", "control-element " + "report " + "off");
+                }
             },
 
             error: function (data) {
@@ -88,6 +98,10 @@ $(document).ready(function () {
 
     $(document).on("click", "#report_btn", function (e) {
         e.preventDefault();
+
+        if (!$(this).hasClass("active")) {
+            return;
+        }
 
         var wisdom_id = $("#wisdom").data("wisdom-id");
 

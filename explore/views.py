@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_POST
+from django.core.serializers import serialize
 
 from main.models import Post, WiseUser
 
@@ -15,6 +16,7 @@ def explore(request):
         except_id = request.POST.get('wisdom_id')
         user = WiseUser.objects.get(id=user_id)
         post = Post.random_wisdome(except_id, user_id)
+        post_data = serialize('json', [post])
 
         response_data = {
             'wisdom': post.text,
@@ -22,10 +24,12 @@ def explore(request):
             'reply': post.reply if post.author != user else False,
             'email': post.author.email,
             'is_accepted': post.accepted.filter(id=user.id).exists(),
+            'post': post_data,
         }
 
         return JsonResponse(response_data)
 
+    # bookmark button
     elif request.method == "PATCH":
         data = json.loads(request.body)
 
@@ -44,6 +48,7 @@ def explore(request):
                          'is_accepted': not is_accepted}
         return JsonResponse(response_data)
     
+    # report
     elif request.method == "PUT":
         data = json.loads(request.body)
 

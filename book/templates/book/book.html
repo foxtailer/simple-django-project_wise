@@ -33,11 +33,17 @@
       <p class="wisdom{% if user.id == post.author.id  %} my{% endif %}" id="{{ post.id }}" data-wisdom-id="{{ post.id }}">{{ post.text }}</p>
 
       {% if user.id != post.author.id  %}
-        <button class="control-element  active" id="unlike_btn" data-like="{{ unlike }}">
+        <button class="control-element  active" id="unlike_btn">
           <svg width="15px" height="15px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
             <use href="{% static 'img/icon/icons.svg' %}#icon-bookmark"></use>
           </svg>
         </button>
+      {% endif %}
+
+      {% if post.status == 'DF'  %}
+          <svg width="15px" height="15px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+            <use href="{% static 'img/icon/icons.svg' %}#icon-pen"></use>
+          </svg>
       {% endif %}
     </div>
   {% endfor %}

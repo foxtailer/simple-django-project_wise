@@ -50,7 +50,7 @@
 
 {% block bottom-menu__items %}
 <li class="bottom-menu__item">
-  <button class="control-element {% if user.id %} active {% else %} off {% endif %} report" 
+  <button class="control-element {% if user.id and user.id != post.author.id %} active {% else %} off {% endif %} report" 
           id="report_btn">
     <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <use href="{% static 'img/icon/icons.svg' %}#icon-exclamation-mark"></use>
@@ -59,8 +59,8 @@
 </li>
 
 <li class="bottom-menu__item">
-  <a class="control-element {% if post.reply %} active {% else %} off {% endif %}" id="mail_btn"
-     href="{% if post.reply %} mailto:{{ post.author.email }} {% endif %}">
+  <a class="control-element {% if user.id != post.author.id and post.reply %} active {% else %} off {% endif %}" id="mail_btn"
+     href="{% if user.id != post.author.id and post.reply %} mailto:{{ post.author.email }} {% else %} # {% endif %}">
     <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <use fill: red; href="{% static 'img/icon/icons.svg' %}#icon-envelope"></use>
     </svg>
