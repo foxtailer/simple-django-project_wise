@@ -26,7 +26,7 @@ def explore(request):
             'wisdom_id': post.id,
             'reply': False if not user_id else post.reply if post.author != user else False,
             'email': post.author.email,
-            'is_accepted': int(post.accepted.filter(id=user.id).exists()),
+            'is_accepted': 0 if not user_id else int(post.accepted.filter(id=user.id).exists()),
             'post': post_data,
         }
 
