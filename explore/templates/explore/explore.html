@@ -20,7 +20,14 @@
   </li>
 
   <li>
-    <button class="control-element {% if user.id and is_accepted %} active used {% elif user.id %} active {% else %} off {% endif %}" 
+    <button class="control-element 
+                  {% if user.id %}
+                    {% if user.id != post.author.id and is_accepted %} active used 
+                    {% elif user.id != post.author.id and not is_accepted %} active
+                    {% else %} off
+                    {% endif %}
+                  {% else %} off 
+                  {% endif %}" 
             id="like_btn"
             data-like="{{ is_accepted }}">
       <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">

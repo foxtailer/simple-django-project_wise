@@ -41,10 +41,18 @@ $(document).ready(function () {
    
                 document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
 
-                if (data.is_accepted) {
-                    document.getElementById("like_btn").setAttribute("class", "control-element " + "active " + "used");
+                if (userId) {
+                    if (post[0].fields.author == userId) {
+                        document.getElementById("like_btn").setAttribute("class", "control-element " + "off");
+                    } else {
+                        if (data.is_accepted) {
+                            document.getElementById("like_btn").setAttribute("class", "control-element " + "active " + "used");
+                        } else {
+                            document.getElementById("like_btn").setAttribute("class", "control-element " + "active");
+                        }
+                    }
                 } else {
-                    document.getElementById("like_btn").setAttribute("class", "control-element " + "active ");
+                    document.getElementById("like_btn").setAttribute("class", "control-element " + "off");
                 }
 
                 if (post[0].fields.author != userId) {
@@ -67,12 +75,16 @@ $(document).ready(function () {
     $(document).on("click", "#like_btn", function (e) {
         e.preventDefault();
 
+        if (!$(this).hasClass("active")) {
+            return;
+        }
+
         var wisdom_id = $("#wisdom").data("wisdom-id");
         var button = $(this);
         var is_accepted = button.data("like"); 
 
         $(this).toggleClass("used"); 
-        console.log(is_accepted)
+        
         $.ajax({
             type: "PATCH",
             url: "",
