@@ -1,0 +1,33 @@
+services:
+  web:
+    build:
+      context: ./dj
+      dockerfile: Dockerfile
+    container_name: wise
+    command: sh -c "python wait_for_db.py && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_NAME=django_db
+      - DATABASE_USER=django_user
+      - DATABASE_PASSWORD=django_pass
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+
+  db:
+    image: postgres:15
+    container_name: wise_db
+    restart: always
+    ports:
+      - "8002:5432"
+    environment:
+      POSTGRES_DB: django_db
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -16,8 +16,8 @@ python manage.py migrate
 
 # Load initial data
 echo "Loading initial data..."
-python manage.py loaddata post.json
 python manage.py loaddata user.json
+python manage.py loaddata post.json
 
 # Start Django server
 echo "Starting Django server..."
