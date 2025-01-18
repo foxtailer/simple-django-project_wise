@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: wise
     command: sh -c "python wait_for_db.py && python manage.py runserver 0.0.0.0:8000"
-    ports:
-      - "8001:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
     environment:
@@ -20,14 +20,20 @@ services:
     image: postgres:15
     container_name: wise_db
     restart: always
-    ports:
-      - "8002:5432"
     environment:
       POSTGRES_DB: django_db
       POSTGRES_USER: django_user
       POSTGRES_PASSWORD: django_pass
+
+  nginx:
+    image: nginx:alpine-perl
+    container_name: wise_nginx
+    ports:
+      - "8001:80"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
