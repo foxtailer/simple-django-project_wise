@@ -6,9 +6,9 @@ services:
     container_name: wise
     command: sh -c "python wait_for_db.py && gunicorn wise.wsgi:application --bind 0.0.0.0:8000"
     expose:
-      - "8000"
-    volumes:
-      - /home/zoy/vscode/simple-django-project/dj/static:/app/static 
+      - "8000" # internal opening. Can be conected only from container inside docker. oposite of <ports:>
+    # volumes:
+    #   - /home/zoy/git/simple-django-project/dj/static:/app/static  # /app/static - internal container path to volume for django app
     depends_on:
       - db
     environment:
@@ -34,7 +34,7 @@ services:
       - "8001:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /home/zoy/vscode/simple-django-project/dj/static:/app/static
+      - /home/zoy/git/simple-django-project_wise/dj/static:/app/static
     depends_on:
       - web
 

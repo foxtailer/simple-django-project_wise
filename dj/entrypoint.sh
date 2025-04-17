@@ -18,6 +18,7 @@ python manage.py migrate
 echo "Loading initial data..."
 python manage.py loaddata fixtures/user.json
 python manage.py loaddata fixtures/post.json
+# python manage.py collectstatic
 
 # Start Django server
 echo "Starting Django server..."
